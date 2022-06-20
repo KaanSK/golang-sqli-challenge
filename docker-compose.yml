@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  juicemarket:
+    build: .
+    container_name: juicemarket
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image:  bitnami/postgresql
+    container_name: "postgresql"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_DATABASE=juice_market
+    ports:
+      - '5432'
